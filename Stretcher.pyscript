@@ -1,0 +1,17 @@
+from flpianoroll import *
+
+factor_mapping = {0: '1', 1: '1.5', 2: '2', 3: '3', 4: '4'}
+
+def createDialog():
+    form = ScriptDialog('Stretch Piano Roll Notes', '')
+    form.AddInputCombo('Stretch Factor', ['1x,1.5x,2x,3x,4x'], 1)
+    return form
+
+def apply(form):
+    stretch_factor = form.GetInputValue('Stretch Factor')
+
+    # Loop through existing notes and apply stretching
+    for i in range(score.noteCount):
+        note = score.getNote(i)
+        note.time *= float(factor_mapping[stretch_factor])
+        note.length *= float(factor_mapping[stretch_factor])
